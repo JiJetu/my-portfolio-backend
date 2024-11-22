@@ -7,18 +7,18 @@ import { TLogIn } from "./auth.interface";
 import { createToken, isPasswordMatch } from "./auth.utils";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
-const signUpIntoDB = async (payload: TUser) => {
-  // const adminExists = await User.findOne({ email: user?.email });
+const signUpIntoDB = async (payload: TUser, user: JwtPayload) => {
+  const adminExists = await User.findOne({ email: user?.email });
 
-  // if (!adminExists) {
-  //   throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized!");
-  // }
+  if (!adminExists) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized!");
+  }
 
-  // const isUserExists = await User.isUserExists(payload.email);
+  const isUserExists = await User.isUserExists(payload.email);
 
-  // if (isUserExists) {
-  //   throw new AppError(httpStatus.NOT_FOUND, "User is already exists");
-  // }
+  if (isUserExists) {
+    throw new AppError(httpStatus.NOT_FOUND, "User is already exists");
+  }
 
   const result = await User.create(payload);
   return result;

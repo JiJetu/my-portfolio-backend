@@ -5,8 +5,8 @@ import { AuthServices } from "./auth.service";
 import config from "../../config";
 
 const registerUser = catchAsync(async (req, res) => {
-  // const user = req.user;
-  const result = await AuthServices.signUpIntoDB(req.body);
+  const user = req.user;
+  const result = await AuthServices.signUpIntoDB(req.body, user);
 
   const { password, ...remainingUserData } = result.toObject();
 
