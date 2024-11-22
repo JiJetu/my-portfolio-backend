@@ -6,5 +6,5 @@ export interface IProject {
   github: string;
   github2?: string;
   liveLink: string;
-  isDeleted: boolean;
+  isDeleted?: boolean;
 }
