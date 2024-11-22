@@ -18,7 +18,7 @@ const createProject = async (payload: IProject) => {
 };
 
 const getAllProjects = async () => {
-  const projects = await Projects.find();
+  const projects = await Projects.find({ isDeleted: false });
 
   return projects;
 };
