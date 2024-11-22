@@ -19,6 +19,7 @@ const createProject = async (payload: IProject) => {
 
 const getAllProjects = async () => {
   const projects = await Projects.find();
+
   return projects;
 };
 
@@ -43,7 +44,11 @@ const updateProject = async (id: string, payload: Partial<IProject>) => {
 };
 
 const deleteProject = async (id: string) => {
-  const project = await Projects.findByIdAndDelete(id);
+  const project = await Projects.findOneAndUpdate(
+    { _id: id, isDeleted: false },
+    { isDeleted: true },
+    { new: true }
+  );
 
   if (!project) {
     throw new AppError(httpStatus.NOT_FOUND, "Project not found");
